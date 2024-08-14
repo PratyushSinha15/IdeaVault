@@ -98,15 +98,26 @@ blogRouter.put('/', async (c)=>{
     }
 })
 
+// here we will get all the blog here i want to add pagination to the blog so that we can get the blog in chunks of 10
+blogRouter.get('/bulk', async (c)=>{
+    const prisma = new PrismaClient({
+		datasourceUrl: c.env?.DATABASE_URL	,
+	}).$extends(withAccelerate());
+	
+	const posts = await prisma.blog.findMany({});
+
+	return c.json(posts);
+})
+
 blogRouter.get('/:id', async (c)=>{
     const prisma= new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
-    const body= await c.req.json();
+    const id=  c.req.param('id');
     try{
         const blog= await prisma.blog.findFirst({
         where:{
-            id: body.id
+            id: Number(id)
         },
         });
         c.status(200);
@@ -117,17 +128,7 @@ blogRouter.get('/:id', async (c)=>{
     }
 })
 
-// here we will get all the blog here i want to add pagination to the blog so that we can get the blog in chunks of 10
-blogRouter.get('/bulk', async (c)=>{
-    const prisma= new PrismaClient({
-        datasourceUrl: c.env?.DATABASE_URL,
-    }).$extends(withAccelerate());
-    const blogs= await prisma.blog.findMany({
-        take: 10,
-        skip: 0,
-    });
-    c.status(200);
-    return c.json({blogs});
-})
+
+
 
 
