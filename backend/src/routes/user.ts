@@ -17,12 +17,11 @@ export const userRouter = new Hono <{
         }).$extends(withAccelerate());
       
         const body= await c.req.json();
-      
-        //zod and pasword hashing can be added here
+
         try{
           const user= await prisma.user.create({
             data:{
-              email: body.email,
+              username: body.username,
               password: body.password,
               name: body.name,
             }
@@ -47,7 +46,7 @@ export const userRouter = new Hono <{
         try{
           const user= await prisma.user.findUnique({
             where:{
-              email: body.email,
+              username: body.username,
               password: body.password,
             }
           });
