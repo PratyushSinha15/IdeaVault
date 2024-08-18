@@ -21,12 +21,12 @@ const Auth = ({type} : {type: "signup" | "signin"}) => {
                 const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs)
                 const jwt = response.data.jwt;
                 localStorage.setItem("token", jwt);
-                navigate("/blog")
+                navigate("/blogs")
                 console.log(response.data)
             }else{
                 //if the user has jwt token then he is already signed in
                 const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs)
-                navigate("/blog")
+                navigate("/blogs")
                 console.log(response.data)
             }
             
