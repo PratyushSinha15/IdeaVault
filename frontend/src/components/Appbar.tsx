@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Avatar } from './Blogcard';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";

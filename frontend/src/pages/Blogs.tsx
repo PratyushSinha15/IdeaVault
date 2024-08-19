@@ -1,8 +1,7 @@
-import React from 'react'
+
 import Blogcard from '../components/Blogcard'
 import Appbar from '../components/Appbar'
 import useBlogs from '../hooks'
-import { BlogSkeleton } from '../components/BlogsSkeleton'
 
 const Blogs = () => {
 
