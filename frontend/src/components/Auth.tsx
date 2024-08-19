@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Input from './Input'
 import { SigninInput, SignupInput } from '@pratyushxdev/medium-common'
@@ -15,6 +15,12 @@ const Auth = ({type} : {type: "signup" | "signin"}) => {
         password: ""
     })
 
+    useEffect(() => {
+        if(localStorage.getItem("token")){
+            navigate("/blogs")
+        }
+    }, [])
+
     async function sendRequest(){
         try {
             if(type==="signup"){
@@ -24,8 +30,11 @@ const Auth = ({type} : {type: "signup" | "signin"}) => {
                 navigate("/blogs")
                 console.log(response.data)
             }else{
+
                 //if the user has jwt token then he is already signed in
                 const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs)
+                const jwt = response.data.jwt;
+                localStorage.setItem("token", jwt);
                 navigate("/blogs")
                 console.log(response.data)
             }
